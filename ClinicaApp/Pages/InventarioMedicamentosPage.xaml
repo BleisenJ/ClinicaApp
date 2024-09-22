@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ClinicaApp.ViewModels"
+             x:Class="ClinicaApp.Pages.InventarioMedicamentosPage">
+
+    <ContentPage.BindingContext>
+        <vm:MedicamentoVM />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10">
+        <Entry Placeholder="Nombre del medicamento" Text="{Binding Nombre}" />
+        <Entry Placeholder="Descripción" Text="{Binding Descripcion}" />
+        <Entry Placeholder="Cantidad Disponible" Text="{Binding CantidadDisponible}" Keyboard="Numeric" />
+        <Entry Placeholder="Cantidad Mínima" Text="{Binding CantidadMinima}" Keyboard="Numeric" />
+
+        <Button Text="Agregar Medicamento" Command="{Binding AgregarMedicamentoCommand}" />
+        <Button Text="Editar Medicamento" Command="{Binding EditarMedicamentoCommand}" IsEnabled="{Binding MedicamentoSeleccionado}" />
+        <Button Text="Eliminar Medicamento" Command="{Binding EliminarMedicamentoCommand}" IsEnabled="{Binding MedicamentoSeleccionado}" />
+
+        <ListView ItemsSource="{Binding ListaMedicamentos}" SelectedItem="{Binding MedicamentoSeleccionado}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Nombre}" />
+                            <Label Text="{Binding Descripcion}" />
+                            <Label Text="Cantidad Disponible: {Binding CantidadDisponible}" />
+                            <Label Text="Cantidad Mínima: {Binding CantidadMinima}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Mostrar una alerta si algún medicamento está por debajo del mínimo -->
+        <Label Text="¡Alerta! Medicamentos por debajo del umbral mínimo."
+               TextColor="Red"
+               IsVisible="{Binding AlertaVisible}" />
+    </StackLayout>
+</ContentPage>

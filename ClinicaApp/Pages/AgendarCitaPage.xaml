@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ClinicaApp.ViewModels"
+             x:Class="ClinicaApp.Pages.AgendarCitaPage"
+             Title="Agendar Cita">
+
+    <!-- Contenido de la interfaz gráfica -->
+    <StackLayout>
+        <DatePicker Date="{Binding FechaSeleccionada}" />
+        <TimePicker Time="{Binding HoraSeleccionada}" />
+        <Picker Title="Seleccionar Médico" ItemsSource="{Binding Medicos}" SelectedItem="{Binding MedicoSeleccionado}">
+            <Picker.ItemDisplayBinding>
+                <Binding Path="Nombre" />
+            </Picker.ItemDisplayBinding>
+        </Picker>
+        <Entry Placeholder="Tipo de Consulta" Text="{Binding TipoConsulta}" />
+        <Button Text="Agendar Cita" Command="{Binding AgendarCitaCommand}" />
+        <Label Text="{Binding MensajeConfirmacion}" TextColor="Green"/>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ClinicaApp.ViewModels"
+             x:Class="ClinicaApp.Pages.HorariosPage"
+             Title="Horarios">
+
+    <ContentPage.BindingContext>
+        <vm:HorarioVM />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20">
+        <CollectionView ItemsSource="{Binding Horarios}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Medico.Nombre}" />
+                        <Label Text="{Binding Dia}" />
+                        <Label Text="{Binding HoraInicio}" />
+                        <Label Text="{Binding HoraFin}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+</ContentPage>

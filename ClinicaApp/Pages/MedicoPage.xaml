@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ClinicaApp.ViewModels"
+             x:Class="ClinicaApp.Pages.MedicoPage"
+             Title="Gestión de Médicos">
+
+    <ContentPage.BindingContext>
+        <vm:MedicoVM />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10">
+        <Entry Placeholder="Nombre" Text="{Binding MedicoSeleccionado.Nombre}" />
+        <Entry Placeholder="Especialidad" Text="{Binding MedicoSeleccionado.Especialidad}" />
+
+        <Button Text="Agregar Médico" Command="{Binding AgregarMedicoCommand}" />
+        <Button Text="Editar Médico" Command="{Binding EditarMedicoCommand}" IsEnabled="{Binding MedicoSeleccionado}" />
+        <Button Text="Eliminar Médico" Command="{Binding EliminarMedicoCommand}" IsEnabled="{Binding MedicoSeleccionado}" />
+
+        <!-- Horarios -->
+        <Label Text="Gestión de Horarios" FontAttributes="Bold" />
+        <Picker Title="Seleccionar Día" ItemsSource="{Binding DaysOfWeek}" SelectedItem="{Binding DiaSeleccionado}" />
+        <TimePicker Time="{Binding HoraInicio}" />
+        <TimePicker Time="{Binding HoraFin}" />
+
+        <Button Text="Agregar Horario" Command="{Binding AgregarHorarioCommand}" IsEnabled="{Binding MedicoSeleccionado}" />
+
+        <!-- Listado de Médicos -->
+        <ListView ItemsSource="{Binding ListaMedicos}" SelectedItem="{Binding MedicoSeleccionado}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Nombre}" />
+                            <Label Text="{Binding Especialidad}" />
+                            <ListView ItemsSource="{Binding Horarios}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Dia}" />
+                                                <Label Text="{Binding HoraInicio}" />
+                                                <Label Text="{Binding HoraFin}" />
+                                                <Button Text="Eliminar" Command="{Binding BindingContext.EliminarHorarioCommand, Source={x:Reference Name=medicoPage}}" CommandParameter="{Binding .}" />
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
